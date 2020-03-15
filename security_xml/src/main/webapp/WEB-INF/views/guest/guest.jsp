@@ -21,11 +21,8 @@
 	<div>
 		<a href="<c:url value="/guest" />">guest page 바로가기</a>
 	</div>
-	<div>
-		<form action="/logout">
-			<input type="hidden" name="${_csrf.parameterName}"
-				value="${_csrf.token}" /> <input type="submit" value="로그아웃">
-		</form>
-	</div>
+	<form action="/logout" method="post">
+    	<input type="submit" value="로그아웃">
+	</form>
 </body>
 </html>

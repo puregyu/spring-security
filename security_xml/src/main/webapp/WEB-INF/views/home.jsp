@@ -9,6 +9,6 @@
 <h1>
 	Hello spring security world!  
 </h1>
-<a href="<c:url value="/login" />" >로그인</a>
+<a href="<c:url value="/loginForm" />" >로그인</a>
 </body>
 </html>

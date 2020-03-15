@@ -2,6 +2,7 @@ package xyz.devyu.security.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class SecurityController {
@@ -12,7 +13,7 @@ public class SecurityController {
 	 * @매핑_메서드 : GET
 	 * @접속_허용_권한 : isAnonymous();
     */
-	@GetMapping("/login")
+	@RequestMapping("/loginForm")
 	public String loginForm() {
 		return "login";
 	}

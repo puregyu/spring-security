@@ -17,12 +17,12 @@
 			<tr>
 				<td>아이디 : </td>
 				<!-- name 값 : login_id 사용가능 -->
-				<td><input type="text" name="devyu_username"/></td>
+				<td><input type="text" name="devyu_username" value="${loginId}"/></td>
 			</tr>
 			<tr>
 				<td>비밀번호 : </td>
 				<!-- name 값 : login_password 사용가능 -->
-				<td><input type="password" name="devyu_password"/></td>
+				<td><input type="password" name="devyu_password" value="${loginPw}"/></td>
 			<tr>
 				<td colspan="2">
 					<input type="submit" name="submit" value="로그인">
@@ -36,9 +36,10 @@
 	이를 세션 객체에 저장을 하게 되는데 이때 세션 객체의 이름
 	[SPRING_SECURITY_LAST_EXCEPTION] 
 	 -->
-	<c:if test="${not empty param.error}">
+	<c:if test="${not empty loginError}">
 		<p>아이디 또는 비밀번호가 일치하지 않습니다.</p>
 		<P>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message }
+		<P>${loginError}
 	</c:if>
 	
 </body>
