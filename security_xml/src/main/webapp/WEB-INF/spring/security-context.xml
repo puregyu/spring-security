@@ -21,6 +21,7 @@
 	<logout/>
 	
 	[use-expressions="true"]
+	spring EL 표현식 사용 true
 	 hasRole
 	 hasAnyRole
 	 permitAll
@@ -35,9 +36,24 @@
 		구체적인 intercept-url을 먼저 적어주고 비교적 덜 구체적인 url을 나중에 설정한다. 
 		-->
 		<!-- securitu가 감시할 URL과 접근가능한 권한을 설정 -->
+		
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
-		<intercept-url pattern="/user/**" access="hasRole('ROLE_USER')" />
+		
+		<!-- 인증을 받고 권한이 USER 또는 ADMIN 인 상태일 때 true -->
+		<intercept-url pattern="/user/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />
+		
+		<!-- 인증을 받고 권한이 GUEST 또는 ADMIN  인 상태일 때 true -->
+		<intercept-url pattern="/guest/**" access="hasAnyRole('ROLE_GUEST', 'ROLE_ADMIN')" />
+
+		<!-- isAuthenticated() : 인증을 받은 로그인 상태일 때 true -->
+		<intercept-url pattern="/loginSuccess/**" access="isAuthenticated()" />
+		
+		<!-- isAnonymous() : 인증을 받지 못한 익명의 상태일 때 true -->
+		<intercept-url pattern="/login/**" access="isAnonymous()" />
+
+		<!-- permitAll : 권한여부 없이 접근 가능, denyAll : 권한여부 없이 접근 불가능 -->
 		<intercept-url pattern="/**" access="permitAll" />
+		
 		<!-- 
 		[parameter]
 		default user-name : j_username
@@ -67,6 +83,23 @@
 			login-page="/login"
 			default-target-url="/loginSuccess"
 			authentication-failure-url="/login?error=fail"/>
+		
+		<!-- 
+		[logout-url]
+		로그아웃 url 설정
+		
+		[logout-success-url]
+		로그아웃 후 이동하는 url 설정
+		
+		[JSESSIONID]
+		로그아웃 후 지워야할 세션 ID 값 설정
+		
+		 -->
+		<logout
+			logout-url="logout"
+			logout-success-url="/"
+			delete-cookies="JSESSIONID"	
+		/>
 	</http>
 	
 	<!-- manager는 인증에 관정 정보를 설정 -->
@@ -74,10 +107,12 @@
 		<!-- provider는 실제 인증을 주관 -->
 		<authentication-provider>
 			<user-service>
-				<user name="aaa" password="{noop}aaa" authorities="ROLE_ADMIN" />
-				<user name="bbb" password="{noop}bbb" authorities="ROLE_USER" />
+				<!-- {noop} 은 패스워드 인코딩을 하지 않겠다는 의미 -->
+				<user name="admin" password="{noop}admin" authorities="ROLE_ADMIN" />
+				<user name="user" password="{noop}user" authorities="ROLE_USER" />
+				<user name="guest" password="{noop}guest" authorities="ROLE_GUEST" />
 			</user-service>
 		</authentication-provider>
 	</authentication-manager>
-
+	
 </beans:beans>
