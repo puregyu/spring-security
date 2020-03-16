@@ -29,7 +29,7 @@
 	-->	
 	<http auto-config="true" use-expressions="true">
 		
-		<csrf disabled="true" />
+		<csrf disabled="false" />
 			
 	
 		<!-- 
@@ -113,6 +113,26 @@
 			delete-cookies="JSESSIONID"	
 			invalidate-session="true"
 		/>
+		
+		<!-- 
+		[session-management]
+		중복 로그인 설정 방지
+		
+		[invalid-session-url]
+		세션이 끊겼을때 이동할 url 설정
+		
+		[max-sessions]
+		최대 허용 가능한 중복 세션 개수 설정
+		
+		[expired-url]
+		로그인 중복이 일어났을 경우 이동시킬 url 설정
+		 -->
+		<session-management invalid-session-url="/">
+        	<concurrency-control max-sessions="1" expired-url="/"/>
+    	</session-management>
+
+
+
 	</http>
 	
 	<!-- bcrypt 암호화 인코더 -->
